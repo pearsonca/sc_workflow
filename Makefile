@@ -19,7 +19,7 @@ figures: $(patsubst %,${ODIR}/figures/cases/%.png,${ISOS}) $(patsubst %,${ODIR}/
 clean:
 	rm raw_epi_data.csv epi_data.rds
 
-${IDIR} ${ODIR} ${ODIR}/figures/cases ${ODIR}/figures/deaths ${ODIR}/figures/both:
+${IDIR} ${ODIR} ${ODIR}/figures/cases ${ODIR}/figures/deaths ${ODIR}/figures/both ${ODIR}/rt:
 	mkdir -p $@
 
 ${IDIR}/raw_epi_data.csv: | ${IDIR}
@@ -35,6 +35,9 @@ ${IDIR}/plot_elements.rda: gen_plot_elements.R
 	${R}
 
 ${ODIR}/africa.png: fig_case_series.R ${IDIR}/epi_data.rds | ${ODIR}
+	${R}
+
+${ODIR}/rt/%.rds: est_rt.R ${IDIR}/epi_data.rds | ${ODIR}/rt
 	${R}
 
 ${ODIR}/figures/cases/%.png: fig_country_case_series.R ${IDIR}/epi_data.rds ${IDIR}/plot_elements.rda | ${ODIR}/figures/cases
