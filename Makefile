@@ -6,7 +6,7 @@ R = Rscript $^ $@
 IDIR := ./input
 ODIR := ./output
 
-default: ${IDIR}/epi_data.rds
+default: ${ODIR}/africa.png
 
 clean:
 	rm raw_epi_data.csv epi_data.rds
@@ -20,3 +20,5 @@ ${IDIR}/raw_epi_data.csv: | ${IDIR}
 ${IDIR}/epi_data.rds: gen_clean_epi_data.R ${IDIR}/raw_epi_data.csv | ${IDIR}
 	${R}
 
+${ODIR}/africa.png: fig_case_series.R ${IDIR}/epi_data.rds | ${ODIR}
+	${R}

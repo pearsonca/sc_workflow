@@ -1,8 +1,10 @@
 
 require(data.table)
 
-.args <- if (interactive()) c(
-  ""
-) else commandArgs(trailingOnly = TRUE)
+.debug <- c("input")
+.args <- if (interactive()) sprintf(c(
+  "%s/thing.rds",
+  "%s/newthing.rds"
+), .debug[1]) else commandArgs(trailingOnly = TRUE)
 
 saveRDS(thing, tail(.args, 1))

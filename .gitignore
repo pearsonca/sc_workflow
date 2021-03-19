@@ -3,3 +3,5 @@
 *.rds
 *.csv
 input/*
+output/*
+.Rhistory
