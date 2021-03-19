@@ -1,14 +1,18 @@
 
+-include local.makefile
+
 DATAURL := https://covid19.who.int/WHO-COVID-19-global-data.csv
 
 R = Rscript $^ $@
 
-IDIR := ./input
-ODIR := ./output
+REFDIR ?= .
+
+IDIR := ${REFDIR}/input
+ODIR := ${REFDIR}/output
 
 ISOS := $(shell cat ${IDIR}/isos.csv)
 
-default: figures
+default: ${IDIR}/isos.csv figures
 
 figures: $(patsubst %,${ODIR}/figures/cases/%.png,${ISOS}) $(patsubst %,${ODIR}/figures/deaths/%.png,${ISOS}) $(patsubst %,${ODIR}/figures/both/%.png,${ISOS})
 
