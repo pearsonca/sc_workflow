@@ -2,3 +2,4 @@
 .Rproj.user
 *.rds
 *.csv
+input/*
