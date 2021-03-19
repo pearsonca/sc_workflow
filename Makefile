@@ -6,7 +6,9 @@ R = Rscript $^ $@
 IDIR := ./input
 ODIR := ./output
 
-default: ${ODIR}/africa.png
+ISOS := $(shell cat ${IDIR}/isos.csv)
+
+default: $(patsubst %,${ODIR}/%.png,${ISOS})
 
 clean:
 	rm raw_epi_data.csv epi_data.rds
@@ -20,5 +22,11 @@ ${IDIR}/raw_epi_data.csv: | ${IDIR}
 ${IDIR}/epi_data.rds: gen_clean_epi_data.R ${IDIR}/raw_epi_data.csv | ${IDIR}
 	${R}
 
+${IDIR}/isos.csv: gen_isos.R ${IDIR}/epi_data.rds
+	${R}
+
 ${ODIR}/africa.png: fig_case_series.R ${IDIR}/epi_data.rds | ${ODIR}
+	${R}
+
+${ODIR}/%.png: fig_country_case_series.R ${IDIR}/epi_data.rds | ${ODIR}
 	${R}
